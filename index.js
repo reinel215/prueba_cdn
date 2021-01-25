@@ -8,6 +8,7 @@ function sendMesagge() {
 
 class Pagos {
 
+
     constructor(API_KEY, API_SECRET) {
 
         this.API_KEY = API_KEY;
@@ -16,7 +17,7 @@ class Pagos {
         this.payFailed = null;
         this.window = null
 
-        Pagos.baseURL = 'https://elated-heyrovsky-b5b692.netlify.app'
+        Pagos.baseURL = 'http://localhost:3000/'
 
     }
 
@@ -29,32 +30,67 @@ class Pagos {
     }
 
 
+    #validateCurrency(currency){
+
+        if ( currency!=='USD' && currency!=='VEF' && currency!=='BTC' && currency!=='PTR' && currency!=='CNY' && currency!=='JPY' ) {
+            console.error('los tipos aceptados por la plataforma son: USD VEF BTC PTR CNY JPY');
+            throw new Error(`el tipo de moneda:${currency} no se encuentra entre los aceptados por la plataforma`);
+        }
+
+    }
+
+
+    #validateAmount(amount){
+        let amountNumber = Number(amount);
+
+        if ( isNaN(amountNumber) ) {
+            throw new Error(`el valor ${amount} no se pudo convertir a number.`);
+        }
+
+    }
+
+
+    #eventListener = (event) => {
+
+        console.log(event);
+        this.#payDispatchHandler(event.data);
+
+    }
+
+
     pay(currency, amount) {
 
+        this.#validateCurrency(currency);
+        this.#validateAmount(amount);
 
 
-        this.window = window.open(Pagos.baseURL, '_blank', 'width=700,height=500,left=200,top=100');
+        let url =`${Pagos.baseURL}payment?amount=${amount}&currency=${currency}`;
 
-        window.addEventListener('message', (event) => {
-            this.payElevenHandler(event.data);
-        }, false)
+
+        this.window = window.open(url, '_blank', 'width=700,height=500,left=200,top=100');
+
+
+        //escuchamos a los mensajes de la ventana hija
+        window.addEventListener('message', this.#eventListener, false)
 
 
 
     }
 
 
-    payElevenHandler(event) {
+    #payDispatchHandler(event) {
 
-        switch (event) {
+        switch (event.type) {
+            case 'child-tab-ready':
+                this.#sendKeys();
+                break;
             case 'pay-success':
-                this.paymentSuccessfully()
+                this.#paymentSuccessfully(event.payload)
                 break;
 
             case 'pay-failed':
-                this.paymentFailed()
+                this.#paymentFailed(event.reason)
                 break
-
             default:
                 break;
         }
@@ -64,14 +100,16 @@ class Pagos {
 
 
 
-    paymentSuccessfully() {
+    #paymentSuccessfully(payload) {
+        
+        window.removeEventListener('message', this.#eventListener, false );
 
         if (!this.paySucces)
             throw new Error('pay success function miss for configuration')
 
         try {
 
-            this.paySucces();
+            this.paySucces(payload);
 
         } catch (error) {
             throw error;
@@ -80,7 +118,9 @@ class Pagos {
     }
 
 
-    paymentFailed() {
+    #paymentFailed(reason) {
+        
+        window.removeEventListener('message', this.#eventListener );
 
         if (!this.payFailed)
             throw new Error('pay failed function miss for configuration')
@@ -88,13 +128,22 @@ class Pagos {
 
         try {
 
-            this.paySucces();
+            this.payFailed(reason);
 
         } catch (error) {
 
             throw error;
             
         }
+
+    }
+
+
+
+    #sendKeys(){
+
+        //send auth to the child
+        this.window.postMessage({ APIKey: this.API_KEY, APISecrect: this.API_SECRET, type: 'keys' },'*');
 
     }
 

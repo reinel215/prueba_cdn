@@ -4,7 +4,8 @@
   "description": "CDN for consumers buissness",
   "main": "index.js",
   "scripts": {
-    "build": "babel ./index.js --out-file ./out/app.js",
+    "build": "babel ./index.js --out-file ./dist/dist.js",
+    "build-watch": "babel ./index.js --watch --out-file ./dist/dist.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "reinel arteaga",
@@ -12,6 +13,8 @@
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-private-methods": "^7.12.1",
     "@babel/preset-env": "^7.12.11"
   },
   "dependencies": {
