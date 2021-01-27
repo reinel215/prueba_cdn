@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>prueba</title>
+
+
+    <script src="./index.js"></script>
+</head>
+
+<body>
+
+    <h2>JavaScript addEventListener()</h2>
+
+    <p>This example uses the addEventListener() method to attach a click event to a button.</p>
+
+    <button id="myBtn">BOTON DE PAGO</button>
+
+    <p id="demo"></p>
+
+    <script>
+        const Pagos_11 = new Pagos('7726b88832307d692b87525923dfb447f7f3607646105d73f43b71a2cc93548b9f76e1201cbe08a6df2f834b8b5ab49afc5f', '5fe0543e10964622b0aac55676479c01');
+
+
+        function pagoBien(reason) {
+            console.log(reason);
+        }
+
+        function pagoMal(reason) {
+            console.log(reason);
+        }
+
+
+        Pagos_11.configure({
+            paySucces : pagoBien, 
+            payFailed : pagoMal
+        })
+
+        document.getElementById("myBtn").addEventListener("click", displayDate);
+
+        function displayDate() {
+            // sendMesagge()
+            Pagos_11.pay('USD','100')
+        }
+
+        
+
+
+
+    </script>
+
+
+
+
+
+</body>
+
+</html>

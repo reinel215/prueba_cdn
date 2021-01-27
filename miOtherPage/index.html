@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mi otra pagina</title>
+</head>
+<body>
+    
+
+
+
+    <input id="my-input" type="text">
+
+    <button id="my-button" >enviar data al padre</button>
+
+
+    <script>
+
+        window.addEventListener('message', (event) =>{
+            console.log(event);
+        }, false )
+
+
+      
+        let button = document.getElementById('my-button');
+        let input = document.getElementById('my-input');
+
+        function sendData() {
+            console.log('enviando data al padre');
+            console.log(input.value);
+            console.log('apunto de enviar la data');
+            window.opener.postMessage(input.value, '*');
+        }
+
+
+
+        button.addEventListener('click', sendData, false );
+
+
+    </script>
+
+
+    <p>esta es mi otra pagina</p>
+
+</body>
+</html>

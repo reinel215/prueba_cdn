@@ -1,11 +1,3 @@
-function sendMesagge() {
-
-    //enviamos mensaje al hijo
-    windowPro.postMessage('este es mi evento desde el padre', '*');
-    console.log('evento enviado');
-}
-
-
 class Pagos {
 
 
@@ -67,7 +59,7 @@ class Pagos {
         let url =`${Pagos.baseURL}payment?amount=${amount}&currency=${currency}`;
 
 
-        this.window = window.open(url, '_blank', 'width=700,height=500,left=200,top=100');
+        this.window = window.open(url, '_blank', 'width=769,height=800,left=200,top=100');
 
 
         //escuchamos a los mensajes de la ventana hija
