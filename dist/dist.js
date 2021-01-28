@@ -10,12 +10,6 @@ function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateM
 
 function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
 
-function sendMesagge() {
-  //enviamos mensaje al hijo
-  windowPro.postMessage('este es mi evento desde el padre', '*');
-  console.log('evento enviado');
-}
-
 var _validateCurrency = new WeakSet();
 
 var _validateAmount = new WeakSet();
@@ -81,7 +75,7 @@ var Pagos = /*#__PURE__*/function () {
       _classPrivateMethodGet(this, _validateAmount, _validateAmount2).call(this, amount);
 
       var url = "".concat(Pagos.baseURL, "payment?amount=").concat(amount, "&currency=").concat(currency);
-      this.window = window.open(url, '_blank', 'width=700,height=500,left=200,top=100'); //escuchamos a los mensajes de la ventana hija
+      this.window = window.open(url, '_blank', 'width=769,height=800,left=200,top=100'); //escuchamos a los mensajes de la ventana hija
 
       window.addEventListener('message', _classPrivateFieldGet(this, _eventListener), false);
     }
