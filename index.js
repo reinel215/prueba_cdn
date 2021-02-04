@@ -9,7 +9,7 @@ class Pagos {
         this.payFailed = null;
         this.window = null
 
-        Pagos.baseURL = 'http://localhost:3000/'
+        Pagos.baseURL = 'http://178.128.11.44:3000/'
 
     }
 
