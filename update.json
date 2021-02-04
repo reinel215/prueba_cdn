@@ -1,0 +1,8 @@
+{
+    "packageManager": "github",
+    "name": "dist.js",
+    "repo": "prueba_cdn/dist.js",
+    "files": {
+      "include": ["dist.js", "dist.min.js", "index.js"]
+    }
+  }
