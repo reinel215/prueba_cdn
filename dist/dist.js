@@ -56,7 +56,7 @@ var Pagos = /*#__PURE__*/function () {
     this.paySucces = null;
     this.payFailed = null;
     this.window = null;
-    Pagos.baseURL = 'http://localhost:3000/';
+    Pagos.baseURL = 'http://178.128.11.44:3000/';
   }
 
   _createClass(Pagos, [{
